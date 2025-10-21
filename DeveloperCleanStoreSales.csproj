@@ -3,8 +3,19 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
+    
+    <!-- Qualidade de código -->
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <!-- Deixa o namespace coerente com o que estamos usando no código -->
+    <RootNamespace>DeveloperCleanStoreSales</RootNamespace>
+
+    <!-- Opcional: linguagem mais recente do compilador C# -->
+    <LangVersion>latest</LangVersion>
+
+    <!-- Opcional: deixar build mais silencioso agora no estudo -->
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
 </Project>
