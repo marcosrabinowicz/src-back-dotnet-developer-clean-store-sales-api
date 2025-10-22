@@ -8,15 +8,18 @@ public class SaleItem
     public decimal DiscountPercent { get; private set; }
 
     public decimal Subtotal => Quantity * UnitPrice;
-    public decimal DiscountAmount => Subtotal * (DiscountPercent / 100);
+    public decimal DiscountAmount => Subtotal * (DiscountPercent / 100m);
     public decimal Total => Subtotal - DiscountAmount;
 
     public SaleItem(string description, int quantity, decimal unitPrice)
     {
-        if (quantity <= 0)
-            throw new DomainException("Quantity must be greater than zero.");
+        if (quantity <= 0) throw new DomainException("Quantity must be greater than zero.");
+        if (unitPrice < 0) throw new DomainException("Unit price cannot be negative.");
 
-        Description = description;
+        Description = string.IsNullOrWhiteSpace(description)
+            ? throw new DomainException("Description is required.")
+            : description;
+
         Quantity = quantity;
         UnitPrice = unitPrice;
         DiscountPercent = DiscountPolicy.GetDiscountFor(quantity);
@@ -24,9 +27,7 @@ public class SaleItem
 
     public void ChangeQuantity(int newQuantity)
     {
-        if (newQuantity <= 0)
-            throw new DomainException("Quantity must be greater than zero.");
-
+        if (newQuantity <= 0) throw new DomainException("Quantity must be greater than zero.");
         Quantity = newQuantity;
         DiscountPercent = DiscountPolicy.GetDiscountFor(newQuantity);
     }
